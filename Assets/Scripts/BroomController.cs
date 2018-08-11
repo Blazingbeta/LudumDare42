@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class BroomController : MonoBehaviour
 {
+	//Serialized Fields
 	[SerializeField] Vector3 m_basePlayerOffset = Vector3.zero;
+
+	//Component References
 	Camera m_mainCam = null;
+	Animator m_anim = null;
+
+	//Local Variables
 	bool m_isInAnimation = false;
 	private void Start()
 	{
 		m_mainCam = Camera.main;
+		m_anim = GetComponent<Animator>();
 	}
 	private void Update()
 	{
@@ -28,14 +35,20 @@ public class BroomController : MonoBehaviour
 		}
 
 		//attaack if input is given
-		if (Input.GetMouseButtonDown(0))
+		if (Input.GetMouseButtonDown(0)&&!m_isInAnimation)
 		{
-			//StartCoroutine();
+			m_anim.SetTrigger("Strike");
+			m_isInAnimation = true;
+		}
+		else if (Input.GetMouseButtonDown(1)&&!m_isInAnimation)
+		{
+			m_anim.SetTrigger("Sweep");
+			m_isInAnimation = true;
 		}
 	}
 	public void EndAnimation()
 	{
-
+		m_isInAnimation = false;
 	}
 	public void BeginStrikeHitbox()
 	{
