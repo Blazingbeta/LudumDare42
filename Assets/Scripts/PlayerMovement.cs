@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour {
 	[SerializeField] float m_movementDragCoeffecient = 0.8f;
 	[SerializeField] float m_movementMass = 3.0f;
 	[SerializeField] float m_movementVelocitySleepSquared = 1.0f;
+	[SerializeField] float m_movementStallDragMultiplier = 1.0f;
 	Vector3 m_currentVelocity = Vector3.zero;
 	private void FixedUpdate()
 	{
@@ -30,6 +31,10 @@ public class PlayerMovement : MonoBehaviour {
 		if (inputDir.sqrMagnitude == 0 && m_currentVelocity.sqrMagnitude <= m_movementVelocitySleepSquared)
 		{
 			m_currentVelocity = Vector3.zero;
+		}
+		else if(inputDir.sqrMagnitude == 0)
+		{
+			m_currentVelocity += dragForce * m_movementStallDragMultiplier;
 		}
 		//Apply the velocity
 		transform.position += m_currentVelocity;
