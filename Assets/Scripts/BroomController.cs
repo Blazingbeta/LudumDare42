@@ -33,8 +33,24 @@ public class BroomController : MonoBehaviour
 			//StartCoroutine();
 		}
 	}
-	private void LateUpdate()
+	public void EndAnimation()
 	{
-		
+
+	}
+	public void BeginStrikeHitbox()
+	{
+
+	}
+	public void EndStrikeHitbox()
+	{
+
+	}
+	public void BeginSweepHitbox()
+	{
+
+	}
+	public void EndSweepHitbox()
+	{
+
 	}
 }

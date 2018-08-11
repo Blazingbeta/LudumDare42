@@ -274,6 +274,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1466041326}
   - component: {fileID: 1466041327}
+  - component: {fileID: 1466041328}
   m_Layer: 0
   m_Name: Broom
   m_TagString: Untagged
@@ -307,6 +308,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_basePlayerOffset: {x: -0.6, y: 0, z: 0}
+--- !u!95 &1466041328
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1466041325}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e8d060497b30bb2408d49f1822c8e1f9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1629798459
 GameObject:
   m_ObjectHideFlags: 0
