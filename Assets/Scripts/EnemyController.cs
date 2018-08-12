@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+	[SerializeField] int m_healthMax = 10;
 	[SerializeField] float m_moveSpeed = 5.0f;
 	[SerializeField] float m_knockbackCutoffSqr = 0.01f;
 
@@ -11,6 +12,9 @@ public class EnemyController : MonoBehaviour
 	Transform m_transform = null;
 	Rigidbody2D m_rb = null;
 
+	int m_health;
+	//These two will probably always be the same, leaving seperated just in case I change it later
+	bool m_healthIsInvincible = false;
 	bool m_isInKnockback = false;
 
 	void Start()
@@ -18,6 +22,14 @@ public class EnemyController : MonoBehaviour
 		m_transform = transform;
 		m_playerTransform = GameController.PlayerTransform;
 		m_rb = GetComponent<Rigidbody2D>();
+
+		SetupEnemy();
+	}
+	public void SetupEnemy()
+	{
+		//Get a spawnpoint and place self at it
+		//Reset health and sprite values
+		m_health = m_healthMax;
 	}
 	void Update()
 	{
@@ -34,12 +46,50 @@ public class EnemyController : MonoBehaviour
 			m_transform.position = Vector3.MoveTowards(m_transform.position, m_playerTransform.position, m_moveSpeed * Time.deltaTime);
 		}
 	}
-	public void ApplyKnockback(Vector2 force)
+	public void DealDamage(int damage)
 	{
-		if (!m_isInKnockback)
+		if (!m_healthIsInvincible)
 		{
-			m_rb.AddForce(force, ForceMode2D.Impulse);
-			m_isInKnockback = true;
+			m_health -= damage;
+			if (m_health <= 0)
+			{
+				//die
+				Die();
+			}
+			else
+			{
+				//Do damaged sprite logic (if I get that far)
+			}
 		}
+	}
+	void Die()
+	{
+		//Grab a set of spare parts from the pool and leave them at this location
+		GameObject parts = ObjectPool.GetObjectFromPool("PartsPile");
+		parts.SetActive(true);
+		parts.transform.position = transform.position;
+		//Put self back into the enemy object pool
+		gameObject.SetActive(false);
+	}
+	public void ApplyKnockback(Vector2 force, float duration)
+	{
+		if (!m_isInKnockback && m_health > 0)
+		{
+			StartCoroutine(KnockbackLoop(force, duration));
+			m_isInKnockback = true;
+			m_healthIsInvincible = true;
+		}
+	}
+	IEnumerator KnockbackLoop(Vector3 force, float duration)
+	{
+		float timer = duration;
+		while(timer > 0)
+		{
+			transform.position += force * (timer / duration)*Time.deltaTime;
+			yield return null;
+			timer -= Time.deltaTime;
+		}
+		m_isInKnockback = false;
+		m_healthIsInvincible = false;
 	}
 }

@@ -7,7 +7,17 @@ public class BroomController : MonoBehaviour
 	private enum CollisionType { Strike, Sweep }
 	//Serialized Fields
 	[SerializeField] Vector3 m_basePlayerOffset = Vector3.zero;
-	[SerializeField] float m_knockbackForce = 3.0f;
+
+	[SerializeField]  int  m_damageStrike = 5;
+	[SerializeField]  int  m_damageSweep  = 3;
+
+	[SerializeField] float m_knockbackStrikeForce = 3.0f;
+	[SerializeField] float m_knockbackSweepForce  = 3.0f;
+	[SerializeField] float m_knockbackStrikeDuration = 0.8f;
+	[SerializeField] float m_knockbackSweepDuration  = 1.2f;
+
+	[SerializeField] float m_knockbackPileForce = 3.0f;
+	[SerializeField] float m_knockbackPileDuration = 1.0f;
 
 	//Component References
 	Camera m_mainCam = null;
@@ -54,14 +64,36 @@ public class BroomController : MonoBehaviour
 	public void CollideWithEnemy(GameObject other)
 	{
 		Debug.Log(other.name + " hit in " + m_currentAttackType);
-		EnemyController enem = other.GetComponent<EnemyController>();
-		if(enem == null)
+		//Check if its an enemy
+		if(other.layer == 9)
 		{
-			Debug.Log("Warning: Hit object " + other.name + " and enemycontrolelr returned null");
-			return;
+			EnemyController enem = other.GetComponent<EnemyController>();
+			if (m_currentAttackType == CollisionType.Strike)
+			{
+				enem.DealDamage(m_damageStrike);
+				//strike knocks the enemy back away from you
+				Vector2 direction = (other.transform.position - transform.position).normalized;
+				enem.ApplyKnockback(direction * m_knockbackStrikeForce, m_knockbackStrikeDuration);
+			}
+			else
+			{
+				enem.DealDamage(m_damageSweep);
+				//Sweep pushes the enemy forward
+				Vector2 direction = -transform.right;
+				enem.ApplyKnockback(direction * m_knockbackSweepForce, m_knockbackSweepDuration);
+			}
 		}
-		Vector2 direction = (other.transform.position - transform.position).normalized;
-		enem.ApplyKnockback(direction * m_knockbackForce);
+		//If its a parts pile
+		else if(other.layer == 10)
+		{
+			PartsPile pile = other.GetComponent<PartsPile>();
+			//Parts piles are only affected by sweeps
+			if(m_currentAttackType == CollisionType.Sweep)
+			{
+				Vector2 direction = -transform.right;
+				pile.HitPile(direction * m_knockbackPileForce, m_knockbackPileDuration);
+			}
+		}
 	}
 	public void EndAnimation()
 	{
