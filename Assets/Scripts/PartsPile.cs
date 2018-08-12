@@ -15,6 +15,7 @@ public class PartsPile : MonoBehaviour {
 		m_isInKnockback = false;
 		m_sprite = transform.GetChild(1).GetComponent<SpriteRenderer>();
 		m_sprite.sprite = m_stackVisuals[m_currentStackAmount - 1];
+		transform.GetChild(0).GetComponent<Collider2D>().isTrigger = true;
 	}
 	public void HitPile(Vector2 force, float duration)
 	{

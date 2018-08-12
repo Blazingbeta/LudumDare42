@@ -53,7 +53,6 @@ public class EnemyController : MonoBehaviour
 			m_health -= damage;
 			if (m_health <= 0)
 			{
-				//die
 				Die();
 			}
 			else
@@ -64,6 +63,7 @@ public class EnemyController : MonoBehaviour
 	}
 	void Die()
 	{
+		GameController.i.AddScore(10);
 		//Grab a set of spare parts from the pool and leave them at this location
 		GameObject parts = ObjectPool.GetObjectFromPool("PartsPile");
 		parts.GetComponent<PartsPile>().Initialize(transform.position);

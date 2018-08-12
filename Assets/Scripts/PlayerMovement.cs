@@ -30,6 +30,12 @@ public class PlayerMovement : MonoBehaviour {
 		{
 			inputDir = inputDir.normalized;
 		}
+		if(inputDir.sqrMagnitude != 0)
+		{
+			float angle = Mathf.Atan2(inputDir.y, inputDir.x) * Mathf.Rad2Deg;
+			Quaternion rot = Quaternion.Euler(0, 0, angle); //Quaternion.AngleAxis(angle, Vector3.forward);
+			transform.GetChild(0).rotation = rot;
+		}
 		transform.position += inputDir * m_movementForce * m_movementModifiers[m_movementPartSlowdownIndex] * Time.deltaTime;
 	}
 	private void OnCollisionEnter2D(Collision2D collision)
@@ -41,9 +47,12 @@ public class PlayerMovement : MonoBehaviour {
 			//update health ui
 			m_healthMeter.fillAmount = (float)m_currentHealth / m_maxHealth;
 			//knockback/invincibility frames
-			if (m_currentHealth < 0)
+			if (m_currentHealth <= 0)
 			{
 				//DIE
+				GameController.i.GameOver();
+				//Do some fancy particles and sounds
+				gameObject.SetActive(false);
 			}
 			else
 			{

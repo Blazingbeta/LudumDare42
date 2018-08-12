@@ -6,6 +6,7 @@ public class BurnerController : MonoBehaviour {
 	[SerializeField] Sprite m_openSprite;
 	[SerializeField] Sprite m_closedSprite;
 	[SerializeField] float m_closedTime = 5.0f;
+	[SerializeField] int[] m_scoreAmounts;
 
 	SpriteRenderer m_sprite;
 
@@ -21,7 +22,7 @@ public class BurnerController : MonoBehaviour {
 		{
 			PartsPile pile = collision.gameObject.GetComponent<PartsPile>();
 			pile.gameObject.SetActive(false);
-			Debug.Log("Consuming pile with " + pile.m_currentStackAmount);
+			GameController.i.AddScore(m_scoreAmounts[pile.m_currentStackAmount - 1]);
 			StartCoroutine(CloseForTime());
 		}
 	}
