@@ -53,10 +53,12 @@ public class EnemyController : MonoBehaviour
 			m_health -= damage;
 			if (m_health <= 0)
 			{
+				SmoothFollow.Shake(0.4f);
 				Die();
 			}
 			else
 			{
+				SmoothFollow.Shake(0.2f);
 				//Do damaged sprite logic (if I get that far)
 			}
 		}

@@ -57,6 +57,7 @@ public class PlayerMovement : MonoBehaviour {
 				//DIE
 				GameController.i.GameOver();
 				SFXManager.i.PlayerDie();
+				SmoothFollow.Shake(0.8f);
 				//Do some fancy particles and sounds
 				gameObject.SetActive(false);
 			}
@@ -64,6 +65,7 @@ public class PlayerMovement : MonoBehaviour {
 			{
 				StartCoroutine(IFrames(m_hitInvincibiltyTime));
 				SFXManager.i.PlayerHit();
+				SmoothFollow.Shake(0.4f);
 			}
 		}
 	}

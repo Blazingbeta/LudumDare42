@@ -1389,6 +1389,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_followTarget: {fileID: 1806754661}
   m_rate: 2
+  m_shakeRate: 10
+  m_shakeAmp: 1
 --- !u!82 &901731577
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1722,7 +1724,7 @@ GameObject:
   - component: {fileID: 937747803}
   - component: {fileID: 937747802}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1758,14 +1760,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6886792, g: 0.3930669, b: 0.3930669, a: 1}
+  m_Color: {r: 0.6603774, g: 0.6603774, b: 0.6603774, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 408d73fc3d826f140a774e35eff81c65, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
