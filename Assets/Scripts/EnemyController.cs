@@ -63,6 +63,7 @@ public class EnemyController : MonoBehaviour
 	}
 	void Die()
 	{
+		SFXManager.i.EnemyDie();
 		GameController.i.AddScore(10);
 		//Grab a set of spare parts from the pool and leave them at this location
 		GameObject parts = ObjectPool.GetObjectFromPool("PartsPile");
@@ -75,6 +76,8 @@ public class EnemyController : MonoBehaviour
 	{
 		if (!m_isInKnockback && m_health > 0)
 		{
+			SFXManager.i.EnemyHit();
+			
 			StartCoroutine(KnockbackLoop(force, duration));
 			m_isInKnockback = true;
 			m_healthIsInvincible = true;

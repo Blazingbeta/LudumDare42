@@ -87,4 +87,13 @@ public class GameController : MonoBehaviour
 		m_menu.interactable = true;
 		m_menu.blocksRaycasts = true;
 	}
+	public void RestartGame()
+	{
+		ObjectPool.ResetPools();
+		UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+	}
+	public void BackToMenu()
+	{
+		UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+	}
 }

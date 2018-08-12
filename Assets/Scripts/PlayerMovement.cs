@@ -56,12 +56,14 @@ public class PlayerMovement : MonoBehaviour {
 			{
 				//DIE
 				GameController.i.GameOver();
+				SFXManager.i.PlayerDie();
 				//Do some fancy particles and sounds
 				gameObject.SetActive(false);
 			}
 			else
 			{
 				StartCoroutine(IFrames(m_hitInvincibiltyTime));
+				SFXManager.i.PlayerHit();
 			}
 		}
 	}

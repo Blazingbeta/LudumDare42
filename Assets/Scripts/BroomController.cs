@@ -101,7 +101,7 @@ public class BroomController : MonoBehaviour
 	}
 	public void BeginStrikeHitbox()
 	{
-
+		SFXManager.i.Swing();
 	}
 	public void EndStrikeHitbox()
 	{
@@ -109,7 +109,7 @@ public class BroomController : MonoBehaviour
 	}
 	public void BeginSweepHitbox()
 	{
-
+		SFXManager.i.Swing();
 	}
 	public void EndSweepHitbox()
 	{

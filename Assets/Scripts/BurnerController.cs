@@ -20,6 +20,7 @@ public class BurnerController : MonoBehaviour {
 	{
 		if(collision.gameObject.layer == 10&&m_isOpen)
 		{
+			SFXManager.i.Burn();
 			PartsPile pile = collision.gameObject.GetComponent<PartsPile>();
 			pile.gameObject.SetActive(false);
 			GameController.i.AddScore(m_scoreAmounts[pile.m_currentStackAmount - 1]);

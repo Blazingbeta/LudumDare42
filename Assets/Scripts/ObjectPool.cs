@@ -4,6 +4,10 @@ using UnityEngine;
 public static class ObjectPool
 {
 	private static Dictionary<string, Pool> m_pools;
+	public static void ResetPools()
+	{
+		m_pools = new Dictionary<string, Pool>();
+	}
 	public static GameObject GetObjectFromPool(string poolName)
 	{
 		if (m_pools == null) m_pools = new Dictionary<string, Pool>();
