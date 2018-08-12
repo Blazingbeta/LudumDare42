@@ -6,13 +6,11 @@ public class PlayerMovement : MonoBehaviour {
 	[SerializeField] int m_maxHealth = 3;
 	[SerializeField] float m_hitInvincibiltyTime = 1.0f;
 	[SerializeField] float m_movementForce = 5.0f;
-	[SerializeField] float m_movementDragCoeffecient = 0.8f;
-	[SerializeField] float m_movementMass = 3.0f;
-	[SerializeField] float m_movementVelocitySleepSquared = 1.0f;
-	[SerializeField] float m_movementStallDragMultiplier = 1.0f;
 	[SerializeField] float[] m_movementModifiers;   //MAKE SURE ARRAY INDEX 0 IS ALWAYS SET TO 1.0
 	[SerializeField] UnityEngine.UI.Image m_healthMeter = null;
-	Vector3 m_currentVelocity = Vector3.zero;
+
+	PartsPile m_currentPile = null;
+
 	int m_movementPartSlowdownIndex = 0;
 	int m_currentHealth;
 	bool m_isInvincible = false;
@@ -22,6 +20,13 @@ public class PlayerMovement : MonoBehaviour {
 	}
 	private void FixedUpdate()
 	{
+		//If the pile is still set, but is disabled
+		//Basically a saftey mechanism for when OnTriggerExit doesn't work
+		if (m_currentPile != null && (!m_currentPile.gameObject.activeInHierarchy||m_currentPile.m_currentStackAmount == 3))
+		{
+			m_movementPartSlowdownIndex = 0;
+			m_currentPile = null;
+		}
 		//Get the user's input and add it to the velocity
 		Vector3 inputDir = Vector3.zero;
 		inputDir.x = Input.GetAxis("Horizontal");
@@ -72,14 +77,13 @@ public class PlayerMovement : MonoBehaviour {
 		{
 			PartsPile pile = collision.transform.parent.GetComponent<PartsPile>();
 			m_movementPartSlowdownIndex = pile.m_currentStackAmount;
-			Debug.Log("slowing to index " + m_movementPartSlowdownIndex);
+			m_currentPile = pile;
 		}
 	}
 	private void OnTriggerExit2D(Collider2D collision)
 	{
 		if(collision.gameObject.layer == 11)
 		{
-			Debug.Log("respeeding");
 			m_movementPartSlowdownIndex = 0;
 		}
 	}

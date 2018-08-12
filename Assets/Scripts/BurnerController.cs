@@ -28,10 +28,12 @@ public class BurnerController : MonoBehaviour {
 	}
 	IEnumerator CloseForTime()
 	{
+		GetComponent<Collider2D>().enabled = false;
 		m_isOpen = false;
 		m_sprite.sprite = m_closedSprite;
 		yield return new WaitForSeconds(m_closedTime);
 		m_isOpen = true;
 		m_sprite.sprite = m_openSprite;
+		GetComponent<Collider2D>().enabled = true;
 	}
 }

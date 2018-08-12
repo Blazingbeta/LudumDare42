@@ -19,8 +19,11 @@ public class PartsPile : MonoBehaviour {
 	}
 	public void HitPile(Vector2 force, float duration)
 	{
-		m_isInKnockback = true;
-		StartCoroutine(KnockbackLoop(force, duration));
+		if (!m_isInKnockback)
+		{
+			m_isInKnockback = true;
+			StartCoroutine(KnockbackLoop(force, duration));
+		}
 	}
 	IEnumerator KnockbackLoop(Vector3 force, float duration)
 	{
@@ -32,9 +35,6 @@ public class PartsPile : MonoBehaviour {
 			timer -= Time.deltaTime;
 		}
 		m_isInKnockback = false;
-	}
-	private void OnTriggerEnter2D(Collider2D collision)
-	{
 	}
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
@@ -57,6 +57,7 @@ public class PartsPile : MonoBehaviour {
 						if (m_currentStackAmount == m_maxStackAmount)
 						{
 							transform.GetChild(0).GetComponent<Collider2D>().isTrigger = false;
+
 						}
 					}
 				}
