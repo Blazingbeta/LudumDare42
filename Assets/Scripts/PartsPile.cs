@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PartsPile : MonoBehaviour {
-	int m_currentStackAmount = 1;
+	[SerializeField] int m_maxStackAmount = 3;
+	public int m_currentStackAmount = 1;
 	bool m_isInKnockback = false;
 	public void Initialize(Vector3 pos)
 	{
@@ -29,6 +30,9 @@ public class PartsPile : MonoBehaviour {
 	}
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
+	}
+	private void OnCollisionEnter2D(Collision2D collision)
+	{
 		//Check if collided with a pile
 		if(collision.gameObject.layer == 10)
 		{
@@ -39,12 +43,21 @@ public class PartsPile : MonoBehaviour {
 				//If we are moving and the other pile isn't, then do nothing and let it absorb this pile
 				if (!(m_isInKnockback && !other.m_isInKnockback))
 				{
-					collision.gameObject.SetActive(false);
-					m_currentStackAmount += other.m_currentStackAmount;
-					//debug
-					transform.localScale = Vector3.one * m_currentStackAmount;
+					//if the piles can fit
+					if (m_currentStackAmount + other.m_currentStackAmount <= m_maxStackAmount)
+					{
+						collision.gameObject.SetActive(false);
+						m_currentStackAmount += other.m_currentStackAmount;
+						if(m_currentStackAmount == m_maxStackAmount)
+						{
+							transform.GetChild(0).GetComponent<Collider2D>().isTrigger = false;
+						}
+						//debug
+						transform.localScale = Vector3.one * m_currentStackAmount;
+					}
 				}
 			}
 		}
+		
 	}
 }
