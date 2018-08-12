@@ -63,7 +63,7 @@ public class BroomController : MonoBehaviour
 	}
 	public void CollideWithEnemy(GameObject other)
 	{
-		Debug.Log(other.name + " hit in " + m_currentAttackType);
+		//Debug.Log(other.name + " hit in " + m_currentAttackType);
 		//Check if its an enemy
 		if(other.layer == 9)
 		{
