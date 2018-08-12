@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class PartsPile : MonoBehaviour {
 	[SerializeField] int m_maxStackAmount = 3;
+	[SerializeField] Sprite[] m_stackVisuals;
 	public int m_currentStackAmount = 1;
 	bool m_isInKnockback = false;
+	SpriteRenderer m_sprite;
 	public void Initialize(Vector3 pos)
 	{
 		transform.position = pos;
 		m_currentStackAmount = 1;
 		m_isInKnockback = false;
+		m_sprite = transform.GetChild(1).GetComponent<SpriteRenderer>();
+		m_sprite.sprite = m_stackVisuals[m_currentStackAmount - 1];
 	}
 	public void HitPile(Vector2 force, float duration)
 	{
@@ -48,12 +52,11 @@ public class PartsPile : MonoBehaviour {
 					{
 						collision.gameObject.SetActive(false);
 						m_currentStackAmount += other.m_currentStackAmount;
-						if(m_currentStackAmount == m_maxStackAmount)
+						m_sprite.sprite = m_stackVisuals[m_currentStackAmount - 1];
+						if (m_currentStackAmount == m_maxStackAmount)
 						{
 							transform.GetChild(0).GetComponent<Collider2D>().isTrigger = false;
 						}
-						//debug
-						transform.localScale = Vector3.one * m_currentStackAmount;
 					}
 				}
 			}

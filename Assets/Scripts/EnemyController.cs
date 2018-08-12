@@ -66,8 +66,8 @@ public class EnemyController : MonoBehaviour
 	{
 		//Grab a set of spare parts from the pool and leave them at this location
 		GameObject parts = ObjectPool.GetObjectFromPool("PartsPile");
+		parts.GetComponent<PartsPile>().Initialize(transform.position);
 		parts.SetActive(true);
-		parts.transform.position = transform.position;
 		//Put self back into the enemy object pool
 		gameObject.SetActive(false);
 	}
