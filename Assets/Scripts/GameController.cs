@@ -27,6 +27,8 @@ public class GameController : MonoBehaviour
 		//Preload the pools
 		ObjectPool.GetObjectFromPool("Enemy");
 		ObjectPool.GetObjectFromPool("PartsPile");
+		ObjectPool.GetObjectFromPool("EnemyHitParticle");
+		ObjectPool.GetObjectFromPool("EnemyDieParticle");
 		StartCoroutine(SpawnEnemyLoop());
 	}
 	//Game loop needs to spawn enemies at intervals

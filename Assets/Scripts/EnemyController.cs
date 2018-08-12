@@ -54,10 +54,16 @@ public class EnemyController : MonoBehaviour
 			if (m_health <= 0)
 			{
 				SmoothFollow.Shake(0.4f);
+				GameObject particle = ObjectPool.GetObjectFromPool("EnemyDieParticle");
+				particle.transform.position = transform.position;
+				particle.SetActive(true);
 				Die();
 			}
 			else
 			{
+				GameObject particle = ObjectPool.GetObjectFromPool("EnemyHitParticle");
+				particle.transform.position = transform.position;
+				particle.SetActive(true);
 				SmoothFollow.Shake(0.2f);
 				//Do damaged sprite logic (if I get that far)
 			}

@@ -54,18 +54,24 @@ public class PlayerMovement : MonoBehaviour {
 			//knockback/invincibility frames
 			if (m_currentHealth <= 0)
 			{
-				//DIE
-				GameController.i.GameOver();
-				SFXManager.i.PlayerDie();
-				SmoothFollow.Shake(0.8f);
 				//Do some fancy particles and sounds
 				gameObject.SetActive(false);
+				SmoothFollow.Shake(0.8f);
+				SFXManager.i.PlayerDie();
+				GameObject particle = ObjectPool.GetObjectFromPool("EnemyDieParticle");
+				particle.transform.position = transform.position;
+				particle.SetActive(true);
+				//DIE
+				GameController.i.GameOver();
 			}
 			else
 			{
 				StartCoroutine(IFrames(m_hitInvincibiltyTime));
 				SFXManager.i.PlayerHit();
 				SmoothFollow.Shake(0.4f);
+				GameObject particle = ObjectPool.GetObjectFromPool("EnemyHitParticle");
+				particle.transform.position = transform.position;
+				particle.SetActive(true);
 			}
 		}
 	}
